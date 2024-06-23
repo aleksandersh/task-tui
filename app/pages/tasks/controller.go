@@ -159,9 +159,13 @@ func (c *controller) populateTasksView(tasks *tasksViewList) {
 }
 
 func (c *controller) addTaskView(item tasksViewItem) {
-	c.view.tasks.AddItem(item.Task.Name, "", 0, func() {
+	c.view.tasks.AddItem(item.Task.Name, item.Task.Description, 0, func() {
 		c.ui.Close()
-		c.task.ExecuteTask(c.ctx, item.Task.Name)
+		if len(item.Task.Aliases) > 0 {
+			c.task.ExecuteTask(c.ctx, item.Task.Aliases[0])
+		} else {
+			c.task.ExecuteTask(c.ctx, item.Task.Name)
+		}
 	})
 }
 
