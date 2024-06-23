@@ -3,9 +3,10 @@ package app
 import (
 	"context"
 
-	"github.com/aleksandersh/taskfile-tui/app/pages/tasks"
-	"github.com/aleksandersh/taskfile-tui/app/ui"
-	"github.com/aleksandersh/taskfile-tui/domain"
+	"github.com/aleksandersh/task-tui/app/pages/tasks"
+	"github.com/aleksandersh/task-tui/app/ui"
+	"github.com/aleksandersh/task-tui/domain"
+	"github.com/aleksandersh/task-tui/task"
 	"github.com/rivo/tview"
 )
 
@@ -15,14 +16,15 @@ const (
 
 type controller struct {
 	ctx       context.Context
+	task      *task.Task
 	taskfile  *domain.Taskfile
 	app       *tview.Application
 	pagesView *tview.Pages
 }
 
-func newController(ctx context.Context, app *tview.Application, taskfile *domain.Taskfile) ui.Controller {
+func newController(ctx context.Context, task *task.Task, app *tview.Application, taskfile *domain.Taskfile) ui.Controller {
 	pagesView := tview.NewPages()
-	return &controller{ctx: ctx, app: app, pagesView: pagesView, taskfile: taskfile}
+	return &controller{ctx: ctx, task: task, app: app, pagesView: pagesView, taskfile: taskfile}
 }
 
 func (c *controller) StartUi() {
@@ -31,5 +33,17 @@ func (c *controller) StartUi() {
 }
 
 func (c *controller) ShowTasks() {
-	c.pagesView.AddAndSwitchToPage(pageNameTasks, tasks.New(c.ctx, c.app, c, c.taskfile), true)
+	c.pagesView.AddAndSwitchToPage(pageNameTasks, tasks.New(c.ctx, c.task, c, c.taskfile), true)
+}
+
+func (c *controller) Focus(view tview.Primitive) {
+	c.app.SetFocus(view)
+}
+
+func (c *controller) PostDraw(f func()) {
+	c.app.QueueUpdateDraw(f)
+}
+
+func (c *controller) Close() {
+	c.app.Stop()
 }

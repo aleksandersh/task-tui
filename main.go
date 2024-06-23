@@ -4,9 +4,9 @@ import (
 	"context"
 	"log"
 
-	"github.com/aleksandersh/taskfile-tui/app"
-	"github.com/aleksandersh/taskfile-tui/cli"
-	"github.com/aleksandersh/taskfile-tui/loader"
+	"github.com/aleksandersh/task-tui/app"
+	"github.com/aleksandersh/task-tui/cli"
+	"github.com/aleksandersh/task-tui/task"
 )
 
 func main() {
@@ -15,12 +15,13 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	taskfile, err := loader.New(args.Config).LoadTaskfile(ctx)
+	task := task.New(args.Config)
+	taskfile, err := task.LoadTaskfile(ctx)
 	if err != nil {
 		log.Fatalf("failed to load taskfile: %v", err)
 	}
 
-	if err := app.New().Start(ctx, taskfile); err != nil {
+	if err := app.New().Start(ctx, task, taskfile); err != nil {
 		log.Fatalf("failed to start application: %v", err)
 	}
 }

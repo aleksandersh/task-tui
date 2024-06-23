@@ -4,7 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/aleksandersh/taskfile-tui/domain"
+	"github.com/aleksandersh/task-tui/domain"
+	"github.com/aleksandersh/task-tui/task"
 	"github.com/rivo/tview"
 )
 
@@ -15,9 +16,9 @@ func New() *App {
 	return &App{}
 }
 
-func (a *App) Start(ctx context.Context, taskfile *domain.Taskfile) error {
+func (a *App) Start(ctx context.Context, task *task.Task, taskfile *domain.Taskfile) error {
 	app := tview.NewApplication()
-	contoller := newController(ctx, app, taskfile)
+	contoller := newController(ctx, task, app, taskfile)
 	contoller.StartUi()
 
 	if err := app.Run(); err != nil {

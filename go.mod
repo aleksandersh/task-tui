@@ -1,4 +1,4 @@
-module github.com/aleksandersh/taskfile-tui
+module github.com/aleksandersh/task-tui
 
 go 1.22
 

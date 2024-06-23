@@ -3,8 +3,9 @@ package tasks
 import (
 	"context"
 
-	"github.com/aleksandersh/taskfile-tui/app/ui"
-	"github.com/aleksandersh/taskfile-tui/domain"
+	"github.com/aleksandersh/task-tui/app/ui"
+	"github.com/aleksandersh/task-tui/domain"
+	"github.com/aleksandersh/task-tui/task"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
@@ -14,17 +15,13 @@ type view struct {
 	filter *tview.TextArea
 }
 
-type viewmodel struct {
-	refreshing bool
-}
-
-func New(ctx context.Context, app *tview.Application, uiController ui.Controller, taskfile *domain.Taskfile) *tview.Grid {
+func New(ctx context.Context, task *task.Task, uiController ui.Controller, taskfile *domain.Taskfile) *tview.Grid {
 	tasksView := createTasksView()
 	filterView := createFilterView()
 	container := createContainerView(tasksView, filterView)
 
 	v := &view{tasks: tasksView, filter: filterView}
-	c := newController(ctx, app, v, taskfile)
+	c := newController(ctx, task, uiController, v, taskfile)
 	c.start()
 
 	startInputHandling(container, c)

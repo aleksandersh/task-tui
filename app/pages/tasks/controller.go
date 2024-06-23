@@ -5,8 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/aleksandersh/taskfile-tui/domain"
-	"github.com/rivo/tview"
+	"github.com/aleksandersh/task-tui/app/ui"
+	"github.com/aleksandersh/task-tui/domain"
+	"github.com/aleksandersh/task-tui/task"
 )
 
 type controllerState struct {
@@ -17,18 +18,19 @@ type controllerState struct {
 
 type controller struct {
 	ctx      context.Context
-	app      *tview.Application
+	task     *task.Task
+	ui       ui.Controller
 	view     *view
 	fullList *tasksViewList
 	state    controllerState
 	filter   chan string
 }
 
-func newController(ctx context.Context, app *tview.Application, view *view, taskfile *domain.Taskfile) *controller {
+func newController(ctx context.Context, task *task.Task, ui ui.Controller, view *view, taskfile *domain.Taskfile) *controller {
 	fullList := createTasksViewList(taskfile)
 	state := controllerState{filterActive: false, filter: "", currentList: fullList}
 	filter := make(chan string, 20)
-	return &controller{ctx: ctx, app: app, view: view, fullList: fullList, state: state, filter: filter}
+	return &controller{ctx: ctx, task: task, ui: ui, view: view, fullList: fullList, state: state, filter: filter}
 }
 
 func (c *controller) start() {
@@ -115,7 +117,7 @@ func (c *controller) startDebouncedFilteringJob() {
 
 func (c *controller) applyFilter(filter string) {
 	tasks := filtered(c.fullList, filter)
-	c.app.QueueUpdateDraw(func() {
+	c.ui.PostDraw(func() {
 		c.populateTasksView(tasks)
 	})
 }
@@ -149,20 +151,21 @@ func (c *controller) populateTasksView(tasks *tasksViewList) {
 
 func (c *controller) addTaskView(item tasksViewItem) {
 	c.view.tasks.AddItem(item.Task.Name, "", 0, func() {
-		// todo: implement execution
+		c.ui.Close()
+		c.task.ExecuteTask(c.ctx, item.Task.Name)
 	})
 }
 
 func (c *controller) focusFilter() {
 	c.state.filterActive = true
 	c.view.filter.SetDisabled(false)
-	c.app.SetFocus(c.view.filter)
+	c.ui.Focus(c.view.filter)
 }
 
 func (c *controller) focusTasks() {
 	c.state.filterActive = false
 	c.view.filter.SetDisabled(true)
-	c.app.SetFocus(c.view.tasks)
+	c.ui.Focus(c.view.tasks)
 }
 
 func (c *controller) resetFilter() {

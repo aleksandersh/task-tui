@@ -3,7 +3,7 @@ package tasks
 import (
 	"strings"
 
-	"github.com/aleksandersh/taskfile-tui/domain"
+	"github.com/aleksandersh/task-tui/domain"
 )
 
 type tasksViewList struct {
