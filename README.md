@@ -33,6 +33,14 @@ task-tui --help
 
 ## Installation
 
+Make sure that Task is [installed](https://taskfile.dev/installation/).
+
+#### Homebrew tap
+
+```bash
+brew install aleksandersh/task-tui/task-tui
+```
+
 #### Go install
 
 Requires Go 1.22
