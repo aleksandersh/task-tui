@@ -16,5 +16,5 @@ func GetArgs() *Args {
 }
 
 func (*Args) Version() string {
-	return "task-tui 0.0.1"
+	return "task-tui 0.0.2"
 }
