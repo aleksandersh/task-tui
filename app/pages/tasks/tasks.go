@@ -18,12 +18,12 @@ type view struct {
 func New(ctx context.Context, task *task.Task, uiController ui.Controller, taskfile *domain.Taskfile) *tview.Grid {
 	tasksView := createTasksView()
 	filterView := createFilterView()
-	container := createContainerView(tasksView, filterView)
 
 	v := &view{tasks: tasksView, filter: filterView}
 	c := newController(ctx, task, uiController, v, taskfile)
 	c.start()
 
+	container := createContainerView(tasksView, filterView)
 	startInputHandling(container, c)
 	v.startFilterChangesHandling(c)
 

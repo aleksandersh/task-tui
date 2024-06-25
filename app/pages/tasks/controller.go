@@ -83,21 +83,34 @@ func (c *controller) onFilterChanged(filter string) {
 	c.filter <- filter
 }
 
+type filterResult struct {
+	filter   string
+	duration time.Duration
+}
+
 func (c *controller) startDebouncedFilteringJob() {
 	ticker := make(chan bool, 20)
-	onFinish := make(chan time.Duration, 20)
+	onFinish := make(chan filterResult, 20)
 	filter := c.state.filter
+	appliedFilter := filter
 	applying := false
 	nextTime := time.Now()
 	for {
 		select {
 		case <-c.ctx.Done():
 			return
-		case duration := <-onFinish:
-			nextTime = time.Now().Add(duration)
+		case result := <-onFinish:
+			nextTime = time.Now().Add(result.duration)
 			applying = false
+			appliedFilter = result.filter
+			if filter != appliedFilter {
+				delayFilter(result.duration, ticker)
+			}
 		case <-ticker:
-			if !applying && nextTime.Before(time.Now()) {
+			if filter == appliedFilter {
+				return
+			}
+			if !applying && !nextTime.After(time.Now()) {
 				applying = true
 				c.applyFilter(filter, onFinish)
 			}
@@ -106,27 +119,34 @@ func (c *controller) startDebouncedFilteringJob() {
 				continue
 			}
 			filter = f
+			if applying {
+				continue
+			}
 			interval := nextTime.Sub(time.Now())
-			if !applying && interval <= 100 {
+			if interval <= 100 {
 				applying = true
 				c.applyFilter(filter, onFinish)
 			} else {
-				go func() {
-					time.Sleep(interval)
-					ticker <- true
-				}()
+				delayFilter(interval, ticker)
 			}
 		}
 	}
 }
 
-func (c *controller) applyFilter(filter string, onFinish chan time.Duration) {
+func delayFilter(interval time.Duration, ticker chan bool) {
+	go func() {
+		time.Sleep(interval)
+		ticker <- true
+	}()
+}
+
+func (c *controller) applyFilter(filter string, onFinish chan filterResult) {
 	start := time.Now()
 	tasks := filtered(c.fullList, filter)
 	c.ui.PostDraw(func() {
 		c.populateTasksView(tasks)
 		go func() {
-			onFinish <- time.Since(start)
+			onFinish <- filterResult{filter: filter, duration: time.Since(start)}
 		}()
 	})
 }
