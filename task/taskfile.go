@@ -7,15 +7,29 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/aleksandersh/task-tui/cli"
 	"github.com/aleksandersh/task-tui/domain"
 )
 
 type Task struct {
-	file string
+	listArgs []string
+	taskArgs []string
 }
 
-func New(file string) *Task {
-	return &Task{file: file}
+func New(args *cli.Args) *Task {
+	listArgs := []string{"--list-all", "--json", "--no-status", "--sort", args.Sort}
+	taskArgs := []string{}
+	if args.ExitCode {
+		taskArgs = append(taskArgs, "--exit-code")
+	}
+	if args.Global {
+		listArgs = append(listArgs, "--global")
+		taskArgs = append(taskArgs, "--global")
+	} else if len(args.Taskfile) > 0 {
+		listArgs = append(listArgs, "--taskfile", args.Taskfile)
+		taskArgs = append(taskArgs, "--taskfile", args.Taskfile)
+	}
+	return &Task{listArgs: listArgs, taskArgs: taskArgs}
 }
 
 func (t *Task) LoadTaskfile(ctx context.Context) (*domain.Taskfile, error) {
@@ -33,22 +47,14 @@ func (t *Task) LoadTaskfile(ctx context.Context) (*domain.Taskfile, error) {
 
 func (t *Task) ExecuteTask(ctx context.Context, name string) {
 	var cmd *exec.Cmd
-	if len(t.file) > 0 {
-		cmd = createTaskCmd(ctx, []string{"--taskfile", t.file, name})
-	} else {
-		cmd = createTaskCmd(ctx, []string{name})
-	}
+	cmd = createTaskCmd(ctx, append(t.taskArgs, name))
 	cmd.Stdout = os.Stdout
 	newScript(ctx, cmd).execute()
 }
 
 func (t *Task) newTaskfileJsonScript(ctx context.Context) *script {
 	var cmd *exec.Cmd
-	if len(t.file) > 0 {
-		cmd = createTaskCmd(ctx, []string{"--taskfile", t.file, "--list-all", "--json", "--no-status"})
-	} else {
-		cmd = createTaskCmd(ctx, []string{"--list-all", "--json", "--no-status"})
-	}
+	cmd = createTaskCmd(ctx, t.listArgs)
 	return newScript(ctx, cmd)
 }
 
