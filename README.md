@@ -22,7 +22,7 @@ If you are using [labels](https://taskfile.dev/usage/#overriding-task-name), you
 # run for a default taskfile
 task-tui
 # or specify the taskfile explicitly
-task-tui -c ./Taskfile.yml
+task-tui -t ./Taskfile.yml
 # ask for help
 task-tui --help
 ```

@@ -34,7 +34,7 @@ func (t *Task) LoadTaskfile(ctx context.Context) (*domain.Taskfile, error) {
 func (t *Task) ExecuteTask(ctx context.Context, name string) {
 	var cmd *exec.Cmd
 	if len(t.file) > 0 {
-		cmd = createTaskCmd(ctx, []string{"-c", t.file, name})
+		cmd = createTaskCmd(ctx, []string{"--taskfile", t.file, name})
 	} else {
 		cmd = createTaskCmd(ctx, []string{name})
 	}
@@ -45,7 +45,7 @@ func (t *Task) ExecuteTask(ctx context.Context, name string) {
 func (t *Task) newTaskfileJsonScript(ctx context.Context) *script {
 	var cmd *exec.Cmd
 	if len(t.file) > 0 {
-		cmd = createTaskCmd(ctx, []string{"-c", t.file, "--list-all", "--json", "--no-status"})
+		cmd = createTaskCmd(ctx, []string{"--taskfile", t.file, "--list-all", "--json", "--no-status"})
 	} else {
 		cmd = createTaskCmd(ctx, []string{"--list-all", "--json", "--no-status"})
 	}

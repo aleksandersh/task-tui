@@ -3,7 +3,7 @@ package cli
 import "github.com/alexflint/go-arg"
 
 type Args struct {
-	Config string `arg:"-c,--config" help:"path to a taskfile"`
+	Taskfile string `arg:"-t,--taskfile" help:"path to a taskfile"`
 }
 
 func GetArgs() *Args {

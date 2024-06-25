@@ -15,7 +15,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	task := task.New(args.Config)
+	task := task.New(args.Taskfile)
 	taskfile, err := task.LoadTaskfile(ctx)
 	if err != nil {
 		log.Fatalf("failed to load taskfile: %v", err)
