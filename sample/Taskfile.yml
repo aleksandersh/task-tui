@@ -1,0 +1,14 @@
+version: '3'
+
+includes:
+  utils: UtilsTaskfile.yml
+
+tasks:
+  etcd:connect:
+    cmds:
+      - etcd-tui localhost:2379 --user user1 --password password1
+    preconditions:
+      - etcd-tui --version
+    desc: Connect to demo etcd cluster using etcd-tui
+    summary: |
+      Connect to demo etcd cluster using etcd-tui

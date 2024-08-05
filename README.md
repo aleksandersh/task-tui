@@ -7,6 +7,8 @@ What is [Task and Taskfile](https://taskfile.dev/)?
 
 The tool is a client with a user interface for the [Task](https://taskfile.dev/) that makes it easier to run tasks from the terminal.
 
+![tuiPack example](./sample/task_tui_screenshot.png "Example")
+
 ## Features
 
 - list and launch tasks
@@ -47,4 +49,18 @@ Requires Go 1.22
 
 ```bash
 go install github.com/aleksandersh/task-tui@latest
+```
+
+## Best practice
+
+#### Use terminal aliases
+
+Improve your productivity by setting up terminal [aliases](https://www.gnu.org/software/bash/manual/html_node/Aliases.html) for frequently used taskfiles.
+
+###### Bash example
+
+```bash
+$ echo $'alias task-tui-sample=\'task-tui -x -t "$HOME/taskfile-tui/sample"\'' >> "$HOME/.bash_aliases"
+$ source "$HOME/.bash_aliases"
+$ task-tui-sample
 ```
