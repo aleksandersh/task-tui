@@ -18,13 +18,21 @@ type controller struct {
 	ctx       context.Context
 	task      *task.Task
 	taskfile  *domain.Taskfile
+	config    *ui.Config
 	app       *tview.Application
 	pagesView *tview.Pages
 }
 
-func newController(ctx context.Context, task *task.Task, app *tview.Application, taskfile *domain.Taskfile) ui.Controller {
+func newController(ctx context.Context, task *task.Task, app *tview.Application, taskfile *domain.Taskfile, config *ui.Config) ui.Controller {
 	pagesView := tview.NewPages()
-	return &controller{ctx: ctx, task: task, app: app, pagesView: pagesView, taskfile: taskfile}
+	return &controller{
+		ctx:       ctx,
+		task:      task,
+		taskfile:  taskfile,
+		config:    config,
+		app:       app,
+		pagesView: pagesView,
+	}
 }
 
 func (c *controller) StartUi() {
@@ -33,7 +41,7 @@ func (c *controller) StartUi() {
 }
 
 func (c *controller) ShowTasks() {
-	c.pagesView.AddAndSwitchToPage(pageNameTasks, tasks.New(c.ctx, c.task, c, c.taskfile), true)
+	c.pagesView.AddAndSwitchToPage(pageNameTasks, tasks.New(c.ctx, c.task, c.config, c, c.taskfile), true)
 }
 
 func (c *controller) Focus(view tview.Primitive) {

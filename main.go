@@ -21,7 +21,7 @@ func main() {
 		log.Fatalf("failed to load taskfile: %v", err)
 	}
 
-	if err := app.New().Start(ctx, task, taskfile); err != nil {
+	if err := app.New(args).Start(ctx, task, taskfile); err != nil {
 		log.Fatalf("failed to start application: %v", err)
 	}
 }

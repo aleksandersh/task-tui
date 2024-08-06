@@ -15,8 +15,8 @@ type view struct {
 	filter *tview.TextArea
 }
 
-func New(ctx context.Context, task *task.Task, uiController ui.Controller, taskfile *domain.Taskfile) *tview.Grid {
-	tasksView := createTasksView()
+func New(ctx context.Context, task *task.Task, config *ui.Config, uiController ui.Controller, taskfile *domain.Taskfile) *tview.Grid {
+	tasksView := createTasksView(config)
 	filterView := createFilterView()
 
 	v := &view{tasks: tasksView, filter: filterView}
@@ -66,10 +66,11 @@ func (v *view) startFilterChangesHandling(c *controller) {
 	})
 }
 
-func createTasksView() *tview.List {
+func createTasksView(config *ui.Config) *tview.List {
 	view := tview.NewList()
 	view.SetHighlightFullLine(true).
-		ShowSecondaryText(false).
+		ShowSecondaryText(config.SecondLineEnabled).
+		SetSecondaryTextColor(tcell.Color16).
 		SetWrapAround(false).
 		SetTitle(" Taskfile ").
 		SetBorder(true)
