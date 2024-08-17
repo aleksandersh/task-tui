@@ -49,6 +49,7 @@ func (t *Task) ExecuteTask(ctx context.Context, name string) {
 	var cmd *exec.Cmd
 	cmd = createTaskCmd(ctx, append(t.taskArgs, name))
 	cmd.Stdout = os.Stdout
+	cmd.Stdin = os.Stdin
 	newScript(ctx, cmd).execute()
 }
 
