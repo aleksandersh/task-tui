@@ -9,6 +9,7 @@ type Controller interface {
 	StartUi()
 	ShowTasks()
 	ShowTaskSummary(task *domain.Task)
+	ShowHelp()
 	Focus(view tview.Primitive)
 	PostDraw(f func())
 	Back()

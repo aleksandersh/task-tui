@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 
+	"github.com/aleksandersh/task-tui/app/pages/help"
 	"github.com/aleksandersh/task-tui/app/pages/summary"
 	"github.com/aleksandersh/task-tui/app/pages/tasks"
 	"github.com/aleksandersh/task-tui/app/ui"
@@ -14,6 +15,7 @@ import (
 const (
 	pageNameTasks       = "Tasks"
 	pageNameTaskSummary = "TaskSummary"
+	pageNameHelp        = "Help"
 )
 
 type controller struct {
@@ -48,6 +50,10 @@ func (c *controller) ShowTasks() {
 
 func (c *controller) ShowTaskSummary(task *domain.Task) {
 	c.pagesView.AddAndSwitchToPage(pageNameTaskSummary, summary.New(c.ctx, c, task), true)
+}
+
+func (c *controller) ShowHelp() {
+	c.pagesView.AddAndSwitchToPage(pageNameHelp, help.New(c.ctx, c), true)
 }
 
 func (c *controller) Focus(view tview.Primitive) {

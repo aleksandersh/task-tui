@@ -12,7 +12,7 @@ import (
 
 const (
 	title  = " Task summary "
-	status = " Press Esc to go back"
+	status = " Press [yellow]Esc[white] to go back"
 )
 
 func New(ctx context.Context, controller ui.Controller, task *domain.Task) *tview.Grid {

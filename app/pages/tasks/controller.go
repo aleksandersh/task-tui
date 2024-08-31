@@ -89,6 +89,10 @@ func (c *controller) onClickSummary() {
 	}
 }
 
+func (c *controller) onClickHelp() {
+	c.ui.ShowHelp()
+}
+
 type filterResult struct {
 	filter   string
 	duration time.Duration

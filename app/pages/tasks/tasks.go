@@ -11,30 +11,39 @@ import (
 )
 
 type view struct {
-	tasks  *tview.List
-	filter *tview.TextArea
+	container    *tview.Grid
+	tasks        *tview.List
+	filter       *tview.TextArea
+	status       *tview.TextView
+	filterActive bool
 }
 
 func New(ctx context.Context, task *task.Task, config *ui.Config, uiController ui.Controller, taskfile *domain.Taskfile) *tview.Grid {
 	tasksView := createTasksView(config)
 	filterView := createFilterView()
+	statusView := ui.CreateStatusTextView(" Press [yellow]h[white] to show the help page")
+	container := createContainerView(tasksView, statusView)
 
-	v := &view{tasks: tasksView, filter: filterView}
+	v := &view{container: container, tasks: tasksView, filter: filterView, status: statusView}
 	c := newController(ctx, task, uiController, v, taskfile)
 	c.start()
 
-	container := createContainerView(tasksView, filterView)
-	startInputHandling(container, c)
+	startInputHandling(v, c)
 	v.startFilterChangesHandling(c)
 
 	return container
 }
 
-func startInputHandling(v *tview.Grid, c *controller) {
+func startInputHandling(v *view, c *controller) {
+	filterViewVisible := false
 	filterViewActive := false
-	v.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+	v.container.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		if !filterViewActive {
 			if event.Key() == tcell.KeyRune && event.Rune() == ui.RuneSlash {
+				if !filterViewVisible {
+					v.showFilterView()
+					filterViewVisible = true
+				}
 				c.onActivateFilter()
 				filterViewActive = true
 				return nil
@@ -45,6 +54,10 @@ func startInputHandling(v *tview.Grid, c *controller) {
 			}
 			if event.Key() == tcell.KeyRune && event.Rune() == ui.RuneS {
 				c.onClickSummary()
+				return nil
+			}
+			if event.Key() == tcell.KeyRune && event.Rune() == ui.RuneH {
+				c.onClickHelp()
 				return nil
 			}
 		}
@@ -68,6 +81,12 @@ func (v *view) startFilterChangesHandling(c *controller) {
 	v.filter.SetChangedFunc(func() {
 		c.onFilterChanged(v.filter.GetText())
 	})
+}
+
+func (v *view) showFilterView() {
+	v.container.RemoveItem(v.filter)
+	v.container.RemoveItem(v.status)
+	v.container.AddItem(v.filter, 1, 0, 1, 1, 2, 0, false)
 }
 
 func createTasksView(config *ui.Config) *tview.List {
@@ -94,10 +113,10 @@ func createFilterView() *tview.TextArea {
 	return filterView
 }
 
-func createContainerView(tasksView *tview.List, filterView *tview.TextArea) *tview.Grid {
+func createContainerView(tasksView *tview.List, statusView *tview.TextView) *tview.Grid {
 	view := tview.NewGrid().
 		SetRows(0, 2).
 		AddItem(tasksView, 0, 0, 1, 1, 0, 0, true).
-		AddItem(filterView, 1, 0, 1, 1, 2, 0, false)
+		AddItem(statusView, 1, 0, 1, 1, 2, 0, false)
 	return view
 }
