@@ -11,12 +11,13 @@ The tool is a client with a user interface for the [Task](https://taskfile.dev/)
 
 ## Features
 
-- list and launch tasks
-- filter tasks
+- List and execute tasks
+- Filtering mode to speed up navigation between tasks
+- Task summary page to show the description of a task
 
 🟥 __The [labels](https://taskfile.dev/usage/#overriding-task-name) are not properly supported right now__ 🟥
 
-If you are using [labels](https://taskfile.dev/usage/#overriding-task-name), you must also specify [namespace alias](https://taskfile.dev/usage/#namespace-aliases) or [task alias](https://taskfile.dev/usage/#task-aliases) for these tasks.
+If you are using [labels](https://taskfile.dev/usage/#overriding-task-name), you must also specify [namespace alias](https://taskfile.dev/usage/#namespace-aliases) or [task alias](https://taskfile.dev/usage/#task-aliases) for those tasks.
 
 ## Usage
 
@@ -31,11 +32,16 @@ task-tui --help
 
 #### Hotkeys
 
-`/` - to enter filtering mode  
+`Enter` - to execute the selected task  
+`/` - to enter the filtering mode  
+`s` - to show the task summary  
+`Esc` - to go back  
+`Ctrl+C` - to exit  
+`h` - to show the help page  
 
 ## Installation
 
-Make sure that Task is [installed](https://taskfile.dev/installation/).
+Make sure Task is [installed](https://taskfile.dev/installation/).
 
 #### Homebrew tap
 
