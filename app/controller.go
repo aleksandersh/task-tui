@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 
+	"github.com/aleksandersh/task-tui/app/pages/summary"
 	"github.com/aleksandersh/task-tui/app/pages/tasks"
 	"github.com/aleksandersh/task-tui/app/ui"
 	"github.com/aleksandersh/task-tui/domain"
@@ -11,7 +12,8 @@ import (
 )
 
 const (
-	pageNameTasks = "tasks"
+	pageNameTasks       = "Tasks"
+	pageNameTaskSummary = "TaskSummary"
 )
 
 type controller struct {
@@ -44,12 +46,23 @@ func (c *controller) ShowTasks() {
 	c.pagesView.AddAndSwitchToPage(pageNameTasks, tasks.New(c.ctx, c.task, c.config, c, c.taskfile), true)
 }
 
+func (c *controller) ShowTaskSummary(task *domain.Task) {
+	c.pagesView.AddAndSwitchToPage(pageNameTaskSummary, summary.New(c.ctx, c, task), true)
+}
+
 func (c *controller) Focus(view tview.Primitive) {
 	c.app.SetFocus(view)
 }
 
 func (c *controller) PostDraw(f func()) {
 	c.app.QueueUpdateDraw(f)
+}
+
+func (c *controller) Back() {
+	if c.pagesView.GetPageCount() > 1 {
+		name, _ := c.pagesView.GetFrontPage()
+		c.pagesView.RemovePage(name)
+	}
 }
 
 func (c *controller) Close() {

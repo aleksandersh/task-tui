@@ -83,6 +83,12 @@ func (c *controller) onFilterChanged(filter string) {
 	c.filter <- filter
 }
 
+func (c *controller) onClickSummary() {
+	if item := c.getCurrentTaskViewItem(); item != nil {
+		c.ui.ShowTaskSummary(&item.Task)
+	}
+}
+
 type filterResult struct {
 	filter   string
 	duration time.Duration

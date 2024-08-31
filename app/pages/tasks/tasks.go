@@ -43,6 +43,10 @@ func startInputHandling(v *tview.Grid, c *controller) {
 				c.onResetFilter()
 				return nil
 			}
+			if event.Key() == tcell.KeyRune && event.Rune() == ui.RuneS {
+				c.onClickSummary()
+				return nil
+			}
 		}
 		if filterViewActive {
 			if event.Key() == tcell.KeyEsc {
