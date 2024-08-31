@@ -1,6 +1,10 @@
 package cli
 
-import "github.com/alexflint/go-arg"
+import (
+	"runtime/debug"
+
+	"github.com/alexflint/go-arg"
+)
 
 type Args struct {
 	ExitCode         bool   `arg:"-x,--exit-code" default:"false" help:"Pass-through the exit code of the task command."`
@@ -17,5 +21,9 @@ func GetArgs() *Args {
 }
 
 func (*Args) Version() string {
-	return "task-tui 0.0.3"
+	version := "unknown"
+	if info, ok := debug.ReadBuildInfo(); ok {
+		version = info.Main.Version
+	}
+	return "task-tui " + version
 }
