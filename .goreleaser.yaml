@@ -23,9 +23,7 @@ builds:
     goarm:
       - '6'
     ldflags:
-      - -s -w -X main.version={{.Version}}
-      - -s -w -X main.commit={{.Commit}}
-      - -s -w -X main.date={{.Date}}
+      - -s -w -X github.com/aleksandersh/task-tui/build.Version={{.Version}}
 
 archives:
   - name_template: "{{.ProjectName}}_{{.Os}}_{{.Arch}}"

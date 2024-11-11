@@ -1,8 +1,7 @@
 package cli
 
 import (
-	"runtime/debug"
-
+	"github.com/aleksandersh/task-tui/build"
 	"github.com/alexflint/go-arg"
 )
 
@@ -41,9 +40,11 @@ func GetArgs() *Args {
 }
 
 func (*Args) Version() string {
-	version := "unknown"
-	if info, ok := debug.ReadBuildInfo(); ok {
-		version = info.Main.Version
+	version := build.Version
+	if len(version) > 0 {
+		version = "v" + version
+	} else {
+		version = "dev"
 	}
 	return "task-tui " + version
 }
