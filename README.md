@@ -21,6 +21,12 @@ If you are using [labels](https://taskfile.dev/usage/#overriding-task-name), you
 
 ## Usage
 
+#### Cli
+
+Task-tui cli supports common Task arguments, see [task documentation](https://taskfile.dev/reference/cli) or `--help` cli argument.
+
+###### Example usage
+
 ```bash
 # run for a default taskfile
 task-tui
@@ -28,7 +34,14 @@ task-tui
 task-tui -t ./Taskfile.yml
 # ask for help
 task-tui --help
-# repeat last executed command
+
+# combine with other task arguments
+task-tui -x -s -v -t ./sample
+```
+
+###### Repeat last executed command
+
+```bash
 task-tui -r
 ```
 
