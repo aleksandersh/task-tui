@@ -28,6 +28,8 @@ task-tui
 task-tui -t ./Taskfile.yml
 # ask for help
 task-tui --help
+# repeat last executed command
+task-tui -r
 ```
 
 #### Hotkeys

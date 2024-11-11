@@ -7,7 +7,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/aleksandersh/task-tui/cli"
+	"github.com/aleksandersh/task-tui/data"
 	"github.com/aleksandersh/task-tui/domain"
 )
 
@@ -16,19 +16,7 @@ type Task struct {
 	taskArgs []string
 }
 
-func New(args *cli.Args) *Task {
-	listArgs := []string{"--list-all", "--json", "--no-status", "--sort", args.Sort}
-	taskArgs := []string{}
-	if args.ExitCode {
-		taskArgs = append(taskArgs, "--exit-code")
-	}
-	if args.Global {
-		listArgs = append(listArgs, "--global")
-		taskArgs = append(taskArgs, "--global")
-	} else if len(args.Taskfile) > 0 {
-		listArgs = append(listArgs, "--taskfile", args.Taskfile)
-		taskArgs = append(taskArgs, "--taskfile", args.Taskfile)
-	}
+func New(listArgs []string, taskArgs []string) *Task {
 	return &Task{listArgs: listArgs, taskArgs: taskArgs}
 }
 
@@ -46,6 +34,7 @@ func (t *Task) LoadTaskfile(ctx context.Context) (*domain.Taskfile, error) {
 }
 
 func (t *Task) ExecuteTask(ctx context.Context, name string) {
+	data.SaveLatestCommand(domain.NewCommand(name, t.taskArgs))
 	var cmd *exec.Cmd
 	cmd = createTaskCmd(ctx, append(t.taskArgs, name))
 	cmd.Stdout = os.Stdout

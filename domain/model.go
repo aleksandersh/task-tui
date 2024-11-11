@@ -10,3 +10,15 @@ type Task struct {
 	Summary     string   `json:"summary"`
 	Aliases     []string `json:"aliases"`
 }
+
+type Command struct {
+	Name string
+	Args []string
+}
+
+func NewTask() {
+}
+
+func NewCommand(name string, args []string) Command {
+	return Command{Name: name, Args: args}
+}

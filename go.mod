@@ -3,8 +3,8 @@ module github.com/aleksandersh/task-tui
 go 1.22
 
 require (
-	github.com/alexflint/go-arg v1.5.0
-	github.com/gdamore/tcell/v2 v2.7.1
+	github.com/alexflint/go-arg v1.5.1
+	github.com/gdamore/tcell/v2 v2.7.4
 	github.com/rivo/tview v0.0.0-20240616192244-23476fa0bab2
 )
 

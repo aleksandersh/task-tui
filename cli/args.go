@@ -12,6 +12,7 @@ type Args struct {
 	Sort             string `arg:"--sort" default:"default" help:"Changes the order of the tasks when listed."`
 	Taskfile         string `arg:"-t,--taskfile" help:"Path to Taskfile."`
 	EnableSecondLine bool   `arg:"--enable-second-line" default:"false" help:"Show the description next to the task name."`
+	Repeat           bool   `arg:"-r,--repeat" default:"false" help:" Try to execute last executed command."`
 }
 
 func GetArgs() *Args {

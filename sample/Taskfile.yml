@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 includes:
   utils: UtilsTaskfile.yml
@@ -12,3 +12,10 @@ tasks:
     desc: Connect to demo etcd cluster using etcd-tui
     summary: |
       Connect to demo etcd cluster using etcd-tui
+
+  hello:
+    cmds:
+      - "{{.TASKFILE_DIR}}/hello.sh"
+    desc: An example of interactive script
+    summary: |
+      An example of interactive script
