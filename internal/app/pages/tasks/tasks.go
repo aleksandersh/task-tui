@@ -3,9 +3,9 @@ package tasks
 import (
 	"context"
 
-	"github.com/aleksandersh/task-tui/app/ui"
-	"github.com/aleksandersh/task-tui/domain"
-	"github.com/aleksandersh/task-tui/task"
+	"github.com/aleksandersh/task-tui/internal/app/ui"
+	"github.com/aleksandersh/task-tui/internal/domain"
+	"github.com/aleksandersh/task-tui/internal/task"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )

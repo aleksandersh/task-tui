@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"github.com/aleksandersh/task-tui/domain"
+	"github.com/aleksandersh/task-tui/internal/domain"
 	"github.com/rivo/tview"
 )
 

@@ -3,12 +3,12 @@ package app
 import (
 	"context"
 
-	"github.com/aleksandersh/task-tui/app/pages/help"
-	"github.com/aleksandersh/task-tui/app/pages/summary"
-	"github.com/aleksandersh/task-tui/app/pages/tasks"
-	"github.com/aleksandersh/task-tui/app/ui"
-	"github.com/aleksandersh/task-tui/domain"
-	"github.com/aleksandersh/task-tui/task"
+	"github.com/aleksandersh/task-tui/internal/app/pages/help"
+	"github.com/aleksandersh/task-tui/internal/app/pages/summary"
+	"github.com/aleksandersh/task-tui/internal/app/pages/tasks"
+	"github.com/aleksandersh/task-tui/internal/app/ui"
+	"github.com/aleksandersh/task-tui/internal/domain"
+	"github.com/aleksandersh/task-tui/internal/task"
 	"github.com/rivo/tview"
 )
 

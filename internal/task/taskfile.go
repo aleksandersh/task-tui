@@ -7,8 +7,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/aleksandersh/task-tui/data"
-	"github.com/aleksandersh/task-tui/domain"
+	"github.com/aleksandersh/task-tui/internal/data"
+	"github.com/aleksandersh/task-tui/internal/domain"
 )
 
 type Task struct {

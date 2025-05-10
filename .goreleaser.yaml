@@ -23,7 +23,7 @@ builds:
     goarm:
       - '6'
     ldflags:
-      - -s -w -X github.com/aleksandersh/task-tui/build.Version={{.Version}}
+      - -s -w -X github.com/aleksandersh/task-tui/internal/build.Version={{.Version}}
 
 archives:
   - name_template: "{{.ProjectName}}_{{.Os}}_{{.Arch}}"

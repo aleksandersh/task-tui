@@ -7,13 +7,14 @@ What is [Task and Taskfile](https://taskfile.dev/)?
 
 The tool is a client with a user interface for the [Task](https://taskfile.dev/) that makes it easier to run tasks from the terminal.
 
-![tuiPack example](./sample/task_tui_screenshot.png "Example")
+![tuiPack example](./examples/task_tui_screenshot.png "Example")
 
 ## Features
 
 - List and execute tasks
 - Filtering mode to speed up navigation between tasks
 - Task summary page to show the description of a task
+- Repeating last executed command
 
 🟥 __The [labels](https://taskfile.dev/usage/#overriding-task-name) are not properly supported right now__ 🟥
 
@@ -36,7 +37,7 @@ task-tui -t ./Taskfile.yml
 task-tui --help
 
 # combine with other task arguments
-task-tui -x -s -v -t ./sample
+task-tui -x -s -v -t ./examples
 ```
 
 ###### Repeat last executed command
@@ -47,12 +48,21 @@ task-tui -r
 
 #### Hotkeys
 
+##### General
+
 `Enter` - to execute the selected task  
-`/` - to enter the filtering mode  
+`/` - to enter the filtering mode (in this mode enter a substring to search for and return to the list by pressing `Enter`)  
 `s` - to show the task summary  
 `Esc` - to go back  
 `Ctrl+C` - to exit  
 `h` - to show the help page  
+
+##### Task list navigation
+
+`Key down` or `tab` - select a next task  
+`Key up` - select a previous task  
+`end` (or `fn` + `Key right` on MacOS) - select a last task  
+`home` (or `fn` + `Key left` on MacOS) - select a first task  
 
 ## Installation
 
@@ -81,7 +91,7 @@ Improve your productivity by setting up terminal [aliases](https://www.gnu.org/s
 ###### Bash example
 
 ```bash
-$ echo $'alias task-tui-sample=\'task-tui -x -t "$HOME/taskfile-tui/sample"\'' >> "$HOME/.bash_aliases"
+$ echo $'alias task-tui-example=\'task-tui -x -t "$HOME/taskfile-tui/examples"\'' >> "$HOME/.bash_aliases"
 $ source "$HOME/.bash_aliases"
-$ task-tui-sample
+$ task-tui-example
 ```

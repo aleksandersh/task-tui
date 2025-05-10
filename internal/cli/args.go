@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"github.com/aleksandersh/task-tui/build"
+	"github.com/aleksandersh/task-tui/internal/build"
 	"github.com/alexflint/go-arg"
 )
 

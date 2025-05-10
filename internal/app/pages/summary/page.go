@@ -4,8 +4,8 @@ import (
 	"context"
 	"strings"
 
-	"github.com/aleksandersh/task-tui/app/ui"
-	"github.com/aleksandersh/task-tui/domain"
+	"github.com/aleksandersh/task-tui/internal/app/ui"
+	"github.com/aleksandersh/task-tui/internal/domain"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )

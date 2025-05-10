@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/aleksandersh/task-tui/task"
+	"github.com/aleksandersh/task-tui/internal/task"
 )
 
 func CreateTask(args *Args) (*task.Task, error) {

@@ -16,9 +16,6 @@ type Command struct {
 	Args []string
 }
 
-func NewTask() {
-}
-
 func NewCommand(name string, args []string) Command {
 	return Command{Name: name, Args: args}
 }

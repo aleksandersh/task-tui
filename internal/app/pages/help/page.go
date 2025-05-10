@@ -3,7 +3,7 @@ package help
 import (
 	"context"
 
-	"github.com/aleksandersh/task-tui/app/ui"
+	"github.com/aleksandersh/task-tui/internal/app/ui"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )

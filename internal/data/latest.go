@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/aleksandersh/task-tui/domain"
+	"github.com/aleksandersh/task-tui/internal/domain"
 )
 
 const fileName = "task_tui_latest_command.json"

@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/aleksandersh/task-tui/app"
-	"github.com/aleksandersh/task-tui/cli"
+	"github.com/aleksandersh/task-tui/internal/app"
+	"github.com/aleksandersh/task-tui/internal/cli"
 )
 
 func main() {
