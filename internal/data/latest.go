@@ -11,8 +11,9 @@ import (
 const fileName = "task_tui_latest_command.json"
 
 type commandDto struct {
-	Name string   `json:"name"`
-	Args []string `json:"args"`
+	Name    string   `json:"name"`
+	Args    []string `json:"args"`
+	CliArgs []string `json:"cli_args"`
 }
 
 func LoadLatestCommand() (domain.Command, error) {
@@ -29,11 +30,15 @@ func LoadLatestCommand() (domain.Command, error) {
 		return domain.Command{}, fmt.Errorf("failed to deserialize latest command: %w", err)
 	}
 
-	return domain.NewCommand(cmd.Name, cmd.Args), nil
+	if cmd.CliArgs == nil {
+		cmd.CliArgs = make([]string, 0, 0)
+	}
+
+	return domain.NewCommand(cmd.Name, cmd.Args, cmd.CliArgs), nil
 }
 
 func SaveLatestCommand(command domain.Command) error {
-	content, err := json.Marshal(commandDto{Name: command.Name, Args: command.Args})
+	content, err := json.Marshal(commandDto{Name: command.Name, Args: command.Args, CliArgs: command.CliArgs})
 	if err != nil {
 		return fmt.Errorf("failed to serialize command: %w", err)
 	}

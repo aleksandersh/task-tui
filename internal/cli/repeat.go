@@ -13,6 +13,6 @@ func Repeat(ctx context.Context, args *Args) error {
 		return err
 	}
 
-	task.New([]string{}, cmd.Args).ExecuteTask(ctx, cmd.Name)
+	task.New([]string{}, cmd.Args, cmd.CliArgs).ExecuteTask(ctx, cmd.Name)
 	return nil
 }

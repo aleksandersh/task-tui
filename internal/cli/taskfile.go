@@ -81,5 +81,5 @@ func CreateTask(args *Args) (*task.Task, error) {
 		taskArgs = append(taskArgs, "--watch")
 	}
 
-	return task.New(listArgs, taskArgs), nil
+	return task.New(listArgs, taskArgs, args.CliArgs), nil
 }

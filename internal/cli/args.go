@@ -36,6 +36,7 @@ type Args struct {
 	Interval             time.Duration
 	Global               bool
 	Force                bool
+	CliArgs              []string
 
 	fs *pflag.FlagSet
 }
@@ -72,6 +73,13 @@ func GetArgs(args []string) *Args {
 	fs.BoolVarP(&result.Global, "global", "g", false, "(Task) Runs global Taskfile, from $HOME/{T,t}askfile.{yml,yaml}.")
 	fs.BoolVarP(&result.Force, "force", "f", false, "(Task) Forces execution even when the task is up-to-date.")
 	fs.Parse(args)
+
+	argsLenAtDash := fs.ArgsLenAtDash()
+	if argsLenAtDash >= 0 {
+		result.CliArgs = fs.Args()[argsLenAtDash:]
+	} else {
+		result.CliArgs = make([]string, 0, 0)
+	}
 
 	result.fs = fs
 
