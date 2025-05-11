@@ -14,8 +14,8 @@ func CreateTask(args *Args) (*task.Task, error) {
 	if args.Global {
 		listArgs = append(listArgs, "--global")
 		taskArgs = append(taskArgs, "--global")
-	} else if args.Taskfile != nil {
-		path, err := filepath.Abs(*args.Taskfile)
+	} else if len(args.Taskfile) > 0 {
+		path, err := filepath.Abs(args.Taskfile)
 		if err != nil {
 			return nil, fmt.Errorf("failed to resolve file path: %w", err)
 		}
@@ -23,12 +23,12 @@ func CreateTask(args *Args) (*task.Task, error) {
 		taskArgs = append(taskArgs, "--taskfile", path)
 	}
 
-	if args.Concurrency != nil {
-		taskArgs = append(taskArgs, "--concurrency", strconv.Itoa(*args.Concurrency))
+	if args.Concurrency > 0 {
+		taskArgs = append(taskArgs, "--concurrency", strconv.Itoa(args.Concurrency))
 	}
-	if args.Dir != nil {
-		listArgs = append(listArgs, "--dir", *args.Dir)
-		taskArgs = append(taskArgs, "--dir", *args.Dir)
+	if len(args.Dir) > 0 {
+		listArgs = append(listArgs, "--dir", args.Dir)
+		taskArgs = append(taskArgs, "--dir", args.Dir)
 	}
 	if args.Dry {
 		taskArgs = append(taskArgs, "--dry")
@@ -39,21 +39,21 @@ func CreateTask(args *Args) (*task.Task, error) {
 	if args.Force {
 		taskArgs = append(taskArgs, "--force")
 	}
-	if args.Interval != nil {
-		taskArgs = append(taskArgs, "--interval", *args.Interval)
+	if args.Interval > 0 {
+		taskArgs = append(taskArgs, "--interval", args.Interval.String())
 	}
-	if args.Sort != nil {
-		listArgs = append(listArgs, "--sort", *args.Sort)
+	if len(args.TaskSort) > 0 {
+		listArgs = append(listArgs, "--sort", args.TaskSort)
 	}
 
-	if args.Output != nil {
-		taskArgs = append(taskArgs, "--output", *args.Output)
+	if len(args.Output) > 0 {
+		taskArgs = append(taskArgs, "--output", args.Output)
 	}
-	if args.OutputGroupBegin != nil {
-		taskArgs = append(taskArgs, "--output-group-begin", *args.OutputGroupBegin)
+	if len(args.OutputGroupBegin) > 0 {
+		taskArgs = append(taskArgs, "--output-group-begin", args.OutputGroupBegin)
 	}
-	if args.OutputGroupEnd != nil {
-		taskArgs = append(taskArgs, "--output-group-end", *args.OutputGroupEnd)
+	if len(args.OutputGroupEnd) > 0 {
+		taskArgs = append(taskArgs, "--output-group-end", args.OutputGroupEnd)
 	}
 	if args.OutputGroupErrorOnly {
 		taskArgs = append(taskArgs, "--output-group-error-only")
@@ -65,11 +65,14 @@ func CreateTask(args *Args) (*task.Task, error) {
 	if args.Silent {
 		taskArgs = append(taskArgs, "--silent")
 	}
-	if args.Yes {
+	if args.AssumeYes {
 		taskArgs = append(taskArgs, "--yes")
 	}
 	if args.Status {
 		taskArgs = append(taskArgs, "--status")
+	}
+	if args.Insecure {
+		taskArgs = append(taskArgs, "--insecure")
 	}
 	if args.Verbose {
 		taskArgs = append(taskArgs, "--verbose")

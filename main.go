@@ -3,13 +3,24 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 
 	"github.com/aleksandersh/task-tui/internal/app"
 	"github.com/aleksandersh/task-tui/internal/cli"
 )
 
 func main() {
-	args := cli.GetArgs()
+	args := cli.GetArgs(os.Args)
+
+	if args.Help {
+		args.PrintUsage()
+		return
+	}
+
+	if args.Version {
+		args.PrintVersion()
+		return
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

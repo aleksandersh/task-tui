@@ -37,7 +37,7 @@ task-tui -t ./Taskfile.yml
 task-tui --help
 
 # combine with other task arguments
-task-tui -x -s -v -t ./examples
+task-tui -xsv -t ./examples
 ```
 
 ###### Repeat last executed command
