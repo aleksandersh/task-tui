@@ -18,17 +18,3 @@ tasks:
     desc: Request ipinfo.io to receive public IP
     summary: |
       Request ipinfo.io to receive public IP
-
-  sdkman:use-java-17:
-    cmds:
-      - sdk use java 17.0.8-amzn
-    desc: Swith to java sdk version 17
-    summary: |
-      Swith to java sdk version 17
-
-  sdkman:use-java-21:
-    cmds:
-      - sdk use java 21.0.1-amzn
-    desc: Swith to java sdk version 21
-    summary: |
-      Swith to java sdk version 21

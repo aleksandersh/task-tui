@@ -1,0 +1,40 @@
+version: "3"
+
+tasks:
+  build:
+    deps:
+      - check-go
+    cmd: go build -o ./bin/
+    desc: Build project
+    summary: |
+      Build project.
+
+  clean:
+    cmd: rm -rf ./bin
+
+  examples:run:
+    deps:
+      - build
+    cmd: ./bin/task-tui -t ./examples
+
+  goreleaser:build:
+    deps:
+      - check-goreleaser
+    cmd: goreleaser build --clean
+
+  goreleaser:release:
+    deps:
+      - check-goreleaser
+    cmd: goreleaser release --clean
+
+  check-go:
+    internal: true
+    preconditions:
+      - sh: 'go version'
+        msg: "Go precondition failed, check if go is installed and available."
+
+  check-goreleaser:
+    internal: true
+    preconditions:
+      - sh: 'goreleaser --version'
+        msg: "GoReleaser precondition failed, check if goreleaser is installed and available."

@@ -1,0 +1,26 @@
+version: "3"
+
+tasks:
+  kill-all-containers:
+    deps:
+      - check-docker-is-running
+    cmds:
+      - 'docker kill "$(docker ps -q)"'
+    desc: Kill all active docker containers
+    summary: |
+      Kill all active docker containers.
+
+  clear:
+    deps:
+      - check-docker-is-running
+    cmds:
+      - 'docker system prune -a'
+    desc: Remove docker unused data
+    summary: |
+      Remove docker unused data.
+
+  check-docker-is-running:
+    internal: true
+    preconditions:
+      - sh: 'docker info'
+        msg: "Docker precondition failed, check if docker is up and running."

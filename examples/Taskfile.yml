@@ -2,6 +2,7 @@ version: "3"
 
 includes:
   utils: UtilsTaskfile.yml
+  docker: docker
 
 tasks:
   etcd:connect:
