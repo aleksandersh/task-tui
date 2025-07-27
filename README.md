@@ -16,10 +16,6 @@ The tool is a client with a user interface for the [Task](https://taskfile.dev/)
 - Task summary page to show the description of a task
 - Repeating last executed command
 
-🟥 __The [labels](https://taskfile.dev/usage/#overriding-task-name) are not properly supported right now__ 🟥
-
-If you are using [labels](https://taskfile.dev/usage/#overriding-task-name), you must also specify [namespace alias](https://taskfile.dev/usage/#namespace-aliases) or [task alias](https://taskfile.dev/usage/#task-aliases) for those tasks.
-
 ## Usage
 
 #### Cli

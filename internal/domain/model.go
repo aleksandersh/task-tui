@@ -6,6 +6,7 @@ type Taskfile struct {
 
 type Task struct {
 	Name        string   `json:"name"`
+	Task        string   `json:"task"`
 	Description string   `json:"desc"`
 	Summary     string   `json:"summary"`
 	Aliases     []string `json:"aliases"`

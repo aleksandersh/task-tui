@@ -40,16 +40,14 @@ func (t *Task) ExecuteTask(ctx context.Context, name string) {
 	if len(t.cliArgs) > 0 {
 		args = append(append(args, "--"), t.cliArgs...)
 	}
-	var cmd *exec.Cmd
-	cmd = createTaskCmd(ctx, args)
+	cmd := createTaskCmd(ctx, args)
 	cmd.Stdout = os.Stdout
 	cmd.Stdin = os.Stdin
 	newScript(ctx, cmd).execute()
 }
 
 func (t *Task) newTaskfileJsonScript(ctx context.Context) *script {
-	var cmd *exec.Cmd
-	cmd = createTaskCmd(ctx, t.listArgs)
+	cmd := createTaskCmd(ctx, t.listArgs)
 	return newScript(ctx, cmd)
 }
 
